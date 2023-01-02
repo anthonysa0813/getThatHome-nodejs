@@ -8,13 +8,13 @@ const getAllUsers = async (req, res = response) => {
   // const users = await User.find().limit(Number(limite)).skip(Number(offset));
   // const total = await User.countDocuments();
 
-  const [users, total] = await Promise.all([
+  const [users] = await Promise.all([
     User.find().limit(Number(limite)).skip(Number(offset)),
-    User.countDocuments(),
+    // User.countDocuments(),
   ]);
 
   if (limite && offset) {
-    res.json({ users, total });
+    res.json({ users });
   } else {
     res.json({
       message: "Get all users",
