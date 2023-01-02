@@ -1,5 +1,5 @@
 ```bash
-npm i cors express dotenv
+npm i cors express dotenv mongoose
 ```
 
 ```bash
