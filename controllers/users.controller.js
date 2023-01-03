@@ -2,6 +2,16 @@ const { response, request } = require("express");
 const User = require("../models/user");
 const bcryptjs = require("bcryptjs");
 
+const getUserById = async (req = request, res = response) => {
+  const { id } = req.params;
+  console.log("usuario :D", id);
+  const usuario = await User.findById(id);
+  res.json({
+    message: "user id",
+    usuario,
+  });
+};
+
 // url: localhost:8080/api/users?limit=10&offset=2
 const getAllUsers = async (req, res = response) => {
   const { limit: limite = 10, offset = 0 } = req.query;
@@ -68,6 +78,7 @@ const deleteUser = async (req, res = response) => {
 
 module.exports = {
   getAllUsers,
+  getUserById,
   createUser,
   editUser,
   deleteUser,

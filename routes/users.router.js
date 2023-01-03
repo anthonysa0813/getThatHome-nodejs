@@ -5,11 +5,18 @@ const {
   createUser,
   editUser,
   deleteUser,
+  getUserById,
 } = require("../controllers/users.controller");
 const validatesFields = require("../middlewares/validates-fields");
 const { existEmail, existUserById } = require("../helpers/db-validators");
+const { validateJWT } = require("../middlewares/validate-jwt");
 const router = Router();
 
+router.get(
+  "/:id",
+  [validateJWT, check("id", "el id es inválido").isMongoId(), validatesFields],
+  getUserById
+);
 router.get("/", getAllUsers);
 
 router.post(
