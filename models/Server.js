@@ -10,6 +10,7 @@ class Server {
     this.middlewares();
     this.paths = {
       users: "/api/users",
+      properties: "api/properties",
     };
     this.routes();
   }
@@ -30,6 +31,7 @@ class Server {
 
   routes() {
     this.app.use(this.paths.users, require("../routes/users.router"));
+    this.app.use(this.paths.properties, require("../routes/properties.router"));
   }
 
   listen() {
