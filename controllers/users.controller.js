@@ -2,19 +2,29 @@ const { response, request } = require("express");
 const User = require("../models/user");
 const bcryptjs = require("bcryptjs");
 
+const getUserById = async (req = request, res = response) => {
+  const { id } = req.params;
+  console.log("usuario :D", id);
+  const usuario = await User.findById(id);
+  res.json({
+    message: "user id",
+    usuario,
+  });
+};
+
 // url: localhost:8080/api/users?limit=10&offset=2
 const getAllUsers = async (req, res = response) => {
   const { limit: limite = 10, offset = 0 } = req.query;
   // const users = await User.find().limit(Number(limite)).skip(Number(offset));
   // const total = await User.countDocuments();
 
-  const [users, total] = await Promise.all([
+  const [users] = await Promise.all([
     User.find().limit(Number(limite)).skip(Number(offset)),
-    User.countDocuments(),
+    // User.countDocuments(),
   ]);
 
   if (limite && offset) {
-    res.json({ users, total });
+    res.json({ users });
   } else {
     res.json({
       message: "Get all users",
@@ -68,6 +78,7 @@ const deleteUser = async (req, res = response) => {
 
 module.exports = {
   getAllUsers,
+  getUserById,
   createUser,
   editUser,
   deleteUser,

@@ -10,7 +10,8 @@ class Server {
     this.middlewares();
     this.paths = {
       users: "/api/users",
-      properties: "api/properties",
+      auth: "/api/auth",
+      properties: "/api/properties",
     };
     this.routes();
   }
@@ -21,16 +22,16 @@ class Server {
 
   middlewares() {
     // directorio público
+    this.app.use(cors());
     this.app.use(express.static("public"));
 
     // lectura y parseo del body
     this.app.use(express.json());
-
-    this.app.use(cors());
   }
 
   routes() {
     this.app.use(this.paths.users, require("../routes/users.router"));
+    this.app.use(this.paths.auth, require("../routes/auth.router"));
     this.app.use(this.paths.properties, require("../routes/properties.router"));
   }
 
