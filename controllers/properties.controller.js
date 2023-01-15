@@ -1,5 +1,6 @@
 const { request, response } = require("express");
 const Property = require("../models/Property");
+const fileUpload = require("express-fileupload");
 
 const getAllProperties = async (req = request, res = response) => {
   const { limit = 9, offset = 0 } = req.query;
