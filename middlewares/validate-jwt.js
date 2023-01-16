@@ -3,7 +3,7 @@ const User = require("../models/user");
 
 const validateJWT = async (req = request, res = response, next) => {
   const token = req.header("Authorization");
-  console.log(token);
+  // console.log(token);
 
   // verificando si  trae el token
   if (!token) {

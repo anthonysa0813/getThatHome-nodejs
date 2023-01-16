@@ -1,6 +1,7 @@
 const { request, response } = require("express");
 const Property = require("../models/Property");
-const fileUpload = require("express-fileupload");
+// const fileUpload = require("express-fileupload");
+const cloudinaryFunc = require("../lib/cloudinary");
 
 const getAllProperties = async (req = request, res = response) => {
   const { limit = 9, offset = 0 } = req.query;
@@ -28,15 +29,20 @@ const getPropertyById = async (req = request, res = response) => {
 };
 
 const postProperty = async (req = request, res = response) => {
-  const { body } = req;
-  const PropertyRes = await new Property(body);
+  try {
+    const { body } = req;
+    // const files = req.files;
+    const PropertyRes = await new Property(body);
 
-  PropertyRes.save();
+    PropertyRes.save();
 
-  res.json({
-    message: "POST property",
-    body,
-  });
+    return res.json({
+      message: "the property has been saved",
+      body,
+    });
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
 };
 
 const updateProperty = async (req = request, res = response) => {
